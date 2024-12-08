@@ -61,7 +61,7 @@ for page in pages:
     for i in range(len(page)):
         if i - 1 >= 0:
             before_pages = page[:i]
-        if i + 1 >= 0:
+        if i + 1 >= len(page):
             after_pages = page[i + 1:]
 
         current_page = page[i]
