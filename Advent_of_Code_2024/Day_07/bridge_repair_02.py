@@ -22,11 +22,12 @@ def evaluate_expression(expression):
 
 OPERATORS = [
     "+",
-    "*"
+    "*",
+    ""
 ]
 equations = []
 
-with open("test_input.txt", "r") as file:
+with open("bridge_repair_input.txt", "r") as file:
     for line in file:
         values = [int(x) for x in line.replace(":", "").split()]
 
@@ -34,11 +35,23 @@ with open("test_input.txt", "r") as file:
 
 sum_equations = 0
 
+
+def concat_equations(expression):
+    indices = [index for index, value in enumerate(expression) if value == ""]
+
+    for index in reversed(indices):
+        expression[index + 1] = int(str(expression[index - 1]) + str(expression[index + 1]))
+        expression.pop(index - 1)
+        expression.pop(index - 1)
+
+    return expression
+
+
 for equation in equations:
     result = equation[0]
     numbers = equation[1:]
 
-    equation_combination_num = (len(numbers) - 1) * (len(OPERATORS) -1)
+    equation_combination_num = (len(numbers) - 1) * (len(OPERATORS) - 2)
     equation_combinations = create_operator_combinations(equation_combination_num, OPERATORS)
 
     all_equation_version = []
@@ -53,10 +66,15 @@ for equation in equations:
         current_equation = numbers.copy()
 
     for eq in all_equation_version:
+        if "" in eq:
+            eq = concat_equations(eq)
+
         eq_result = evaluate_expression(eq)
 
         if eq_result == result:
             sum_equations += eq_result
+            # print(eq)
+            # print(eq_result)
             break
 
 print(sum_equations)

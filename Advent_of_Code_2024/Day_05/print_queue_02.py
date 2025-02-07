@@ -28,7 +28,7 @@ number_before_rules = {}
 number_after_rules = {}
 
 # Read the input file and populate the rules and pages
-with open("print_queue_input.txt", "r") as file:
+with open("test_input.txt", "r") as file:
     for line in file:
         if "|" in line:
             # Split the line into before and after numbers
@@ -84,11 +84,20 @@ for page in pages:
                 correct_order = False
                 break
 
+
+    # def reorder_pages(pages_data):
+    #     re_pages = []
+    #
+    #     for p in range(len(pages_data)):
+
+
+
     # If the order is correct, add the middle page to the sum
-    if correct_order:
-        middle_index = len(page) // 2
-        middle_page = page[middle_index]
-        middle_pages_sum += middle_page
+    if not correct_order:
+        pass
+        # middle_index = len(page) // 2
+        # middle_page = page[middle_index]
+        # middle_pages_sum += middle_page
 
 # Print the sum of the middle pages
 print(middle_pages_sum)

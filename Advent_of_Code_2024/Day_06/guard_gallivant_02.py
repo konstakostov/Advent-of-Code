@@ -42,10 +42,13 @@ with open("guard_gallivant_input.txt", "r") as file:
         matrix.append(curr_line)  # Add current line to the matrix
 
 # Initialize unique guard positions counter
-unique_guard_positions = 0
+infinite_loops = []
 
 # Initialize direction index
 direction_index = 0
+
+# Save starting coordinates of the guard
+start_coordinates = guard_coordinates
 
 # Start a loop to move the guard
 while True:
@@ -63,32 +66,28 @@ while True:
 
     # Check if the new position is out of bounds
     if not (0 <= new_row < len(matrix) and 0 <= new_col < len(matrix[0])):
-        unique_guard_positions += 1
-
         break
 
     # Check if the new position is an obstacle
     if matrix[new_row][new_col] == "#":
         direction_index += 1
-        # Reset direction index if it exceeds the number of directions
 
+        # Reset direction index if it exceeds the number of directions
         if direction_index > 3:
             direction_index = 0
 
+        matrix[row][col] = "+"
+
         continue
 
-    # Check if the new position is an empty space
-    if matrix[new_row][new_col] == ".":
-        matrix[new_row][new_col] = DIRECTIONS_SYMBOL[direction_index]
-        unique_guard_positions += 1
-    else:
-        # Mark the new position with the direction symbol
-        matrix[new_row][new_col] = DIRECTIONS_SYMBOL[direction_index]
-
-    # Mark the current position as visited
-    matrix[row][col] = "X"
-    # Update the guard's coordinates
-    guard_coordinates = [new_row, new_col]
-
-# Print the number of unique positions visited by the guard
-print(unique_guard_positions)
+    # possible_rows = []
+    # possible_cols = []
+    #
+    # if matrix[new_row][new_col] == "+":
+    #     for r in range(len(matrix)):
+    #         if matrix[r][col] == "+" and r != row:
+    #             possible_rows.append(matrix[r][col])
+    #
+    #     for c in range(len(matrix[row])):
+    #         if matrix[row][c] == "+" and c != col:
+    #             possible_cols.append(matrix[row][c])
